@@ -3,6 +3,8 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import razorpay from 'razorpay'
 import transactionModel from "../models/transactionModel.js";
+import sendEmail from "../utils/sendEmail.js";
+import crypto from 'node:crypto';
 
 const registerUser = async (req, res) => {
     try {
@@ -122,4 +124,83 @@ const paymentRazorpay = async(req, res)=>{
         res.json({success: false, message: error.message})
     }
 }
-export {registerUser, loginUser, userCredits, paymentRazorpay}
+
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) return res.json({ success: false, message: "Please provide email" });
+
+    const user = await userModel.findOne({ email });
+
+    if (!user) return res.json({ success: false, message: "User with this email does not exist" });
+
+    // Generate reset token (random string or JWT)
+    const resetToken = crypto.randomBytes(32).toString("hex");
+
+    // Hash token and set to user model (for security)
+    const resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+
+    // Set token expiry (e.g., 1 hour)
+    const resetPasswordExpires = Date.now() + 3600000; // 1 hour from now
+
+    user.resetPasswordToken = resetPasswordToken;
+    user.resetPasswordExpires = resetPasswordExpires;
+
+    await user.save();
+
+    // Construct reset URL
+    const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+
+    const message = `You requested a password reset. Please click this link to reset your password:\n\n${resetUrl}\n\nIf you did not request this, please ignore this email.`;
+
+    // Send email
+    await sendEmail({
+      email: user.email,
+      subject: "Password Reset Request",
+      message,
+    });
+
+    res.json({ success: true, message: "Password reset email sent" });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: "Error sending email" });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    const resetToken = req.params.token;
+    const { password } = req.body;
+
+    if (!password) return res.json({ success: false, message: "Please provide a new password" });
+
+    // Hash token received in URL
+    const resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+
+    // Find user with token and check expiry
+    const user = await userModel.findOne({
+      resetPasswordToken,
+      resetPasswordExpires: { $gt: Date.now() }, // token not expired
+    });
+
+    if (!user) return res.json({ success: false, message: "Invalid or expired token" });
+
+    // Hash new password and update
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
+
+    // Remove reset token fields
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+
+    await user.save();
+
+    res.json({ success: true, message: "Password reset successful" });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: "Failed to reset password" });
+  }
+};
+
+export {registerUser, loginUser, userCredits, paymentRazorpay, forgotPassword, resetPassword }

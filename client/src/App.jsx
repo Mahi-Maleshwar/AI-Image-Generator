@@ -10,6 +10,8 @@ import Footer from './components/Footer'
 import Login from './components/Login'
 import { AppContext } from './context/AppContext'
 import HistoryPage from './pages/historyPage'
+import ResetPassword from './components/ResetPassword'; // Adjust path if needed
+
 
 const App = () => {
 
@@ -24,6 +26,8 @@ const App = () => {
         <Route path='/result' element={<Result />}/>
         <Route path='/buy' element={<BuyCredit />}/>
         <Route path="/history" element={<HistoryPage />}/>
+        <Route path='/reset-password/:token' element={<ResetPassword />} />
+        <Route path='/login' element={<Login />} />
       </Routes>
       <Footer/>
     </div>

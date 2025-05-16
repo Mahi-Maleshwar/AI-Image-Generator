@@ -9,10 +9,14 @@ import historyRouter from './routes/historyRoutes.js';
 
 const PORT = process.env.PORT || 4000
 const app = express()
+await connectDB()
 
 app.use(express.json())
-app.use(cors())
-await connectDB()
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true, // only if you're using cookies/auth headers
+}));
+
 
 app.use('/api/user', userRouter)
 app.use('/api/image', imageRouter)
