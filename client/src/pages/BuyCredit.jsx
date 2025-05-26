@@ -13,6 +13,10 @@ const BuyCredit = () => {
 
   const navigate = useNavigate()
   const initPay = async (order)=>{
+     if (!window.Razorpay) {
+    toast.error("Razorpay SDK failed to load. Check your internet connection or script tag.");
+    return;
+  }
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       amount: order.amount,
@@ -24,7 +28,11 @@ const BuyCredit = () => {
       handler: async (response)=>{
         console.log(response);
         navigate('/')
-      }
+      },
+      prefill: {
+      name: user?.name,
+      email: user?.email
+    },
     }
 
     const rzp = new window.Razorpay(options)
