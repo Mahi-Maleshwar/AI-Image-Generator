@@ -17,11 +17,16 @@ const ResetPassword = () => {
       const res = await axios.post(
         `${backendUrl}/api/user/reset-password/${token}`,
         { password }
+        
       );
       setMsg(res.data.message);
       setSuccess(res.data.success);
     } catch (error) {
-      setMsg("Error resetting password");
+       if (error.response?.data?.message) {
+    setMsg(error.response.data.message);
+  } else {
+    setMsg("Error resetting password");
+  }
     }
   };
 
