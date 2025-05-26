@@ -150,7 +150,8 @@ const forgotPassword = async (req, res) => {
     await user.save();
 
     // Construct reset URL
-    const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+    const frontend_Url = process.env.FRONTEND_URL
+    const resetUrl = `${frontend_Url}/reset-password/${resetToken}`;
 
     const message = `You requested a password reset. Please click this link to reset your password:\n\n${resetUrl}\n\nIf you did not request this, please ignore this email.`;
 
