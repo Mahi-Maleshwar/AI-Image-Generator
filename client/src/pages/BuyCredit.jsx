@@ -38,7 +38,7 @@ const BuyCredit = () => {
         return
       }
 
-      const { data } = await axios.post(`${backendUrl}/api/user/pay-razor'`, { planId }, {headers: {token}})
+      const { data } = await axios.post(`${backendUrl}/api/user/pay-razor`, { planId }, {headers: {token}})
 
       if (data.success){
         initPay(data.order)
