@@ -16,5 +16,3 @@ userRouter.post('/reset-password/:token', resetPassword)
 export default userRouter
 
 
-// localhost:4000/api/user/register
-// localhost:4000/api/user/login
