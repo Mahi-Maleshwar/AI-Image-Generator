@@ -13,7 +13,7 @@ const ResetPassword = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        `http://localhost:4000/api/user/reset-password/${token}`,
+        `${backendUrl}/api/user/reset-password/${token}`,
         { password }
       );
       setMsg(res.data.message);

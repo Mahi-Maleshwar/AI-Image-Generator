@@ -17,7 +17,7 @@ const Login = () => {
 
     try {
       if (mode === 'login') {
-        const { data } = await axios.post(`${backendUrl}api/user/login`, { email, password });
+        const { data } = await axios.post(`${backendUrl}/api/user/login`, { email, password });
 
         if (data.success) {
           setToken(data.token);
@@ -29,7 +29,7 @@ const Login = () => {
           toast.error(data.message);
         }
       } else if (mode === 'signup') {
-        const { data } = await axios.post(`${backendUrl}api/user/register`, { name, email, password });
+        const { data } = await axios.post(`${backendUrl}/api/user/register`, { name, email, password });
 
         if (data.success) {
           setToken(data.token);
@@ -40,7 +40,7 @@ const Login = () => {
           toast.error(data.message);
         }
       } else if (mode === 'forgot') {
-        const { data } = await axios.post(`${backendUrl}api/user/forgot-password`, { email });
+        const { data } = await axios.post(`${backendUrl}/api/user/forgot-password`, { email });
 
         if (data.success) {
           toast.success(data.message);
