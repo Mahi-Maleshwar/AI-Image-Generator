@@ -36,7 +36,11 @@ const BuyCredit = () => {
     }
 
     const rzp = new window.Razorpay(options)
+    console.log("Razorpay Key ID:", import.meta.env.VITE_RAZORPAY_KEY_ID);
+
     rzp.open()
+    console.log(typeof window.Razorpay)
+
   }
 
   const paymentRazorpay = async (planId) => {
@@ -53,6 +57,8 @@ const BuyCredit = () => {
       if (data.success){
         initPay(data.order)
       }
+      console.log("Order received:", data.order);
+
 
     } catch (error) {
       toast.error(error.message)
