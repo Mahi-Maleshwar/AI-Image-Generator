@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { AppContext } from '../context/AppContext';
 
 const HistoryPage = () => {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const { token, backendUrl } = useContext(AppContext)
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -17,7 +19,7 @@ const HistoryPage = () => {
           return;
         }
 
-        const res = await axios.get('http://localhost:4000/api/history', {
+        const res = await axios.get(`${backendUrl}/api/history`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
