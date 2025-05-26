@@ -105,19 +105,19 @@ const paymentRazorpay = async(req, res)=>{
 
         date = Date.now();
 
-        const transactionData = {
-            userId, plan, amount, credits, date
-        }
-
-        const newTransaction = await transactionModel.create(transactionData)
-
         const options = {
             amount: amount * 100,
             currency: process.env.CURRENCY,
             receipt: newTransaction._id.toString(),
         }
-
         const order = await razorpayInstance.orders.create(options);
+         if (!order) {
+            return res.json({ success: false, message: 'Failed to create Razorpay order' });
+        }
+         const transactionData = {
+            userId, plan, amount, credits, date
+        }
+        const newTransaction = await transactionModel.create(transactionData)
         res.json({ success: true, order });
     } catch (error) {
         console.log(error)
