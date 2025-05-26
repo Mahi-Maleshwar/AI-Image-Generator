@@ -13,7 +13,7 @@ await connectDB()
 
 app.use(express.json())
 app.use(cors({
-  origin: "https://ai-image-generator-mu-hazel.vercel.app",
+  origin: "https://ai-image-generator-client-blush.vercel.app",
   credentials: true, // only if you're using cookies/auth headers
 }));
 
