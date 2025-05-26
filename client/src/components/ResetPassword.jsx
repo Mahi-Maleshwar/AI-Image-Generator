@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 
 const ResetPassword = () => {
@@ -9,8 +11,9 @@ const ResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
   const [success, setSuccess] = useState(false);
+  const { backendUrl } = useContext(AppContext)
   
-  const backendUrl = process.env.VITE_BACKEND_URL
+  
   const handleReset = async (e) => {
     e.preventDefault();
     try {

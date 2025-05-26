@@ -185,7 +185,10 @@ const resetPassword = async (req, res) => {
       resetPasswordExpires: { $gt: Date.now() }, // token not expired
     });
 
-    if (!user) return res.json({ success: false, message: "Invalid or expired token" });
+     if (!user) {
+  console.log("User not found with this token or token expired.");
+  return res.json({ success: false, message: "Invalid or expired token" });
+}
 
     // Hash new password and update
     const salt = await bcrypt.genSalt(10);
