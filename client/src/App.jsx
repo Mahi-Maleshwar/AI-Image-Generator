@@ -8,8 +8,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Login from './components/Login'
+import HistoryPage from './pages/HistoryPage'
 import { AppContext } from './context/AppContext'
-import HistoryPage from './pages/historyPage'
+
 import ResetPassword from './components/ResetPassword'; // Adjust path if needed
 
 
