@@ -22,8 +22,9 @@ const BuyCredit = () => {
       description: 'Credits Payment',
       order_id: order.id,
       receipt: order.receipt,
-      handler: async(response)=>{
-          console.log(response)
+      handler: async (response)=>{
+        console.log(response);
+        navigate('/')
       }
     }
     const rzp = new window.Razorpay(options)
@@ -37,11 +38,10 @@ const BuyCredit = () => {
         return
       }
       
-      const { data } = await axios.post(backendUrl+'/api/user/pay-razor', { planId, userId: user._id }, {headers: {
-      Authorization: `Bearer ${token}` 
+      const { data } = await axios.post(backendUrl+'/api/user/pay-razor', { planId }, {headers: {
+      Authorization: { token } 
     }})
     
-    console.log(data)
    
       if (data.success){
         initPay(data.order)
