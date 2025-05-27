@@ -41,6 +41,7 @@ const BuyCredit = () => {
       Authorization: `Bearer ${token}` 
     }})
     
+    console.log(data)
    
       if (data.success){
         initPay(data.order)
