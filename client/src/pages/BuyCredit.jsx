@@ -52,6 +52,10 @@ const BuyCredit = () => {
       console.log('_id' in user); // true or false
 console.log('id' in user);
 console.log('_ud' in user);
+console.log(Object.keys(user));
+console.log(user);
+
+
 
       console.log("User created:", user._id)
       console.log("User Created 1:", user.id)
