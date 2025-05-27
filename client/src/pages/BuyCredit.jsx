@@ -38,7 +38,7 @@ const BuyCredit = () => {
         return
       }
       
-      const { data } = await axios.post(backendUrl+'/api/user/pay-razor', { planId }, {headers: {
+      const { data } = await axios.post(backendUrl+'/api/user/pay-razor', { _id:user._id, planId }, {headers: {
       Authorization: { token } 
     }})
     
