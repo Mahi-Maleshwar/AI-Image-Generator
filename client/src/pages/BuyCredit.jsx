@@ -53,9 +53,10 @@ const BuyCredit = () => {
       const { data } = await axios.post(`${backendUrl}/api/user/pay-razor`, { planId, userId: user._id}, {headers: {
       Authorization: `Bearer ${token}` 
     }})
+    console.log("Sending backend", {planId, userId: user._id})
     console.log(data)
       if (data.success){
-        initPay(data.order)
+        initPay(data.order)S
       }
       console.log("Order received:", data.order);
 
