@@ -117,6 +117,7 @@ const options = {
 }
 
 const order = await razorpayInstance.orders.create(options);
+console.log("Order:", order)
 
         res.json({ success: true, order });
     } catch (error) {
