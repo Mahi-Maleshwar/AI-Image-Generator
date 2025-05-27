@@ -20,6 +20,7 @@ const AppContextProvider = (props)=>{
             if(data.success){
                 setCredit(data.credits)
                 setUser(data.user)
+                console.log(data.user)
             }
         } catch (error) {
             console.log(error)
