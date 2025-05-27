@@ -21,7 +21,7 @@ const AppContextProvider = (props)=>{
                 setCredit(data.credits)
                 setUser(data.user)
                 console.log(data.user)
-                console.log(user?._id)
+                console.log(user)
             }
         } catch (error) {
             console.log(error)

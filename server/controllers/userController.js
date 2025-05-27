@@ -74,7 +74,10 @@ const razorpayInstance = new razorpay({
 
 const paymentRazorpay = async(req, res)=>{
     try {
-        const {userId, planId} = req.body
+        console.log(req.user.id)
+        const userId = req.user.id;
+        console.log("User:", userId)
+        const { planId } = req.body;
         console.log(userId, planId)
         if(!userId || !planId){
             return res.json({success: false, message: 'Missing Details'})

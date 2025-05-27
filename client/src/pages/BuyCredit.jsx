@@ -50,7 +50,7 @@ const BuyCredit = () => {
         return
       }
       console.log(id)
-      const { data } = await axios.post(`${backendUrl}/api/user/pay-razor`, { planId, userId: user}, {headers: {
+      const { data } = await axios.post(`${backendUrl}/api/user/pay-razor`, { planId }, {headers: {
       Authorization: `Bearer ${token}` 
     }})
     console.log("Sending backend", {planId, userId: user})
