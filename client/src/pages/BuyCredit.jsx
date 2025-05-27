@@ -56,7 +56,7 @@ const BuyCredit = () => {
     console.log("Sending backend", {planId, userId: user._id})
     console.log(data)
       if (data.success){
-        initPay(data.order)S
+        initPay(data.order)
       }
       console.log("Order received:", data.order);
 

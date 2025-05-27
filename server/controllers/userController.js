@@ -75,12 +75,14 @@ const razorpayInstance = new razorpay({
 const paymentRazorpay = async(req, res)=>{
     try {
         const {userId, planId} = req.body
-
-        const userData = await userModel.findById(userId)
-
         if(!userId || !planId){
             return res.json({success: false, message: 'Missing Details'})
         }
+
+         const userExists = await userModel.exists({ _id: userId });
+        if (!userExists) {
+      return res.json({ success: false, message: 'User not found' });
+    }
 
         let credits, plan, amount, date 
         switch (planId){
