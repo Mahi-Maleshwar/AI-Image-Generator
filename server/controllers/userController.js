@@ -74,11 +74,11 @@ const razorpayInstance = new razorpay({
 
 const paymentRazorpay = async(req, res)=>{
     try {
-        const {_id, planId} = req.body
+        const {userId, planId} = req.body
 
-        const userData = await userModel.findById(_id)
+        const userData = await userModel.findById(userId)
 
-        if(!_id || !planId){
+        if(!userId || !planId){
             return res.json({success: false, message: 'Missing Details'})
         }
 
@@ -106,7 +106,7 @@ const paymentRazorpay = async(req, res)=>{
         date = Date.now();
 
         const transactionData = {
-            _id, plan, amount, credits, date
+            userId, plan, amount, credits, date
         }
 
         const newTransaction = await transactionModel.create(transactionData)
