@@ -49,7 +49,9 @@ const BuyCredit = () => {
         setShowLogin(true)
         return
       }
-
+      console.log("User created:", user._id)
+      console.log("User Created 1:", user.id)
+      console.log("User created11: ", user?.id)
       const { data } = await axios.post(`${backendUrl}/api/user/pay-razor`, { planId, userId: user}, {headers: {
       Authorization: `Bearer ${token}` 
     }})
