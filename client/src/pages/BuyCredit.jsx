@@ -49,6 +49,10 @@ const BuyCredit = () => {
         setShowLogin(true)
         return
       }
+      console.log('_id' in user); // true or false
+console.log('id' in user);
+console.log('_ud' in user);
+
       console.log("User created:", user._id)
       console.log("User Created 1:", user.id)
       console.log("User created11: ", user?.id)
