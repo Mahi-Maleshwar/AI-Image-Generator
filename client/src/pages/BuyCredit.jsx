@@ -12,11 +12,8 @@ const BuyCredit = () => {
   const {user, backendUrl, loadCreditsData, token, setShowLogin} = useContext(AppContext)
 
   const navigate = useNavigate()
+
   const initPay = async (order)=>{
-     if (!window.Razorpay) {
-    toast.error("Razorpay SDK failed to load. Check your internet connection or script tag.");
-    return;
-  }
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       amount: order.amount,
@@ -25,37 +22,26 @@ const BuyCredit = () => {
       description: 'Credits Payment',
       order_id: order.id,
       receipt: order.receipt,
-      handler: async (response)=>{
-        console.log(response);
-        navigate('/')
-      },
-      prefill: {
-      name: user?.name,
-      email: user?.email
-    },
+      handler: async(response)=>{
+          console.log(response)
+      }
     }
-
     const rzp = new window.Razorpay(options)
-    console.log("Razorpay Key ID:", import.meta.env.VITE_RAZORPAY_KEY_ID);
-
     rzp.open()
-    console.log(typeof window.Razorpay)
-
   }
-
+  
   const paymentRazorpay = async (planId) => {
     try {
       if(!user){
         setShowLogin(true)
         return
       }
-      console.log(id)
-      const { data } = await axios.post(`${backendUrl}/api/user/pay-razor`, { planId }, {headers: {
+      
+      const { data } = await axios.post(backendUrl+'/api/user/pay-razor', { planId }, {headers: {
       Authorization: `Bearer ${token}` 
     }})
-    console.log("Sending backend", {planId, userId: user})
+    
    
-    console.log(data)
       if (data.success){
         initPay(data.order)
       }
